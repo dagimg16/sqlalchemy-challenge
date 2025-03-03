@@ -115,10 +115,11 @@ def start_end_route(start, end):
         return "Invalid date format. Please use YYYY-MM-DD/YYYY-MM-DD."
 
     temp_data = session.query(func.min(Measurement.tobs),\
-                              func.avg(Measurement.tobs)).\
-                                filter(Measurement.date >= cleaned_start_date,\
-                                       Measurement.date <= cleaned_end_date).all()
-
+                              func.max(Measurement.tobs),\
+                                func.avg(Measurement.tobs)).\
+                                    filter(Measurement.date >= cleaned_start_date,\
+                                           Measurement.date <= cleaned_end_date).all()
+    
     temp_min, temp_max, temp_avg = temp_data[0]
     return (
         f"<b>Temperature information for dates starting {cleaned_start_date} and ending {cleaned_end_date}:</b><br>"
